@@ -1,19 +1,19 @@
 @charset "UTF-8";
 /*
-Theme Name: Author
-Theme URI: https://www.competethemes.com/author/
-Author: Compete Themes
-Author URI: https://www.competethemes.com
-Description: Author is designed for publishers who want readers. That's why Author is fast, responsive, accessibility-ready, and optimally designed for reading. All scripts and stylesheets are minified, concatenated, and conditionally loaded to maximize performance. The layout adapts fluidly to all screen sizes to enhance usability. As one of few accessibility-ready themes, it performs well for users with wide ranges of disabilities. Based on the ancient Van de Graaf canon, Author features a layout that promotes readability. Use Author to create a simple blog, magazine, or news website. The simple and minimalist design works great for gaming, business, fashion, music, food, travel, and photography niches. Now with complete WooCommerce support for eCommerce stores and fully compatible with the new Gutenberg post editor. Preview Author now on desktop, tablets, and mobile devices with the interactive live demo: https://www.competethemes.com/demos/?theme=author
+Theme Name: Authorial
+Theme URI: https://github.com/xurxodiz/authorial/
+Author: Xurxo Diz Pico
+Author URI: https://xurxodiz.eu/
+Description: A small changes overlay on top of Author by Ben Sibley (check it out at https://github.com/BenSibley/Author).
 Version: 1.54
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: one-column, two-columns, left-sidebar, accessibility-ready, custom-logo, custom-menu, featured-images, rtl-language-support, sticky-post, theme-options, threaded-comments, translation-ready, blog, education, news, wide-blocks
-Text Domain: author
+Text Domain: authorial
 Tested up to: 6.7
 Requires PHP: 5.6.40
 
-Author WordPress Theme, Copyright 2024 Compete Themes
+Author WordPress Theme, Copyright 2024 Compete Themes, 2024 Xurxo Diz Pico
 Author is distributed under the terms of the GNU GPL
 */
 /*===== Variables =====*/
@@ -43,7 +43,7 @@ h2 {
 }
 
 .woocommerce-account .woocommerce-MyAccount-navigation li a, .singular-attachment .attachment-caption, .site-footer .design-credit, .widget > *, .comment-footer a,
-.comment-footer span, .bypostauthor > .comment .author-name:after, .further-reading span, .post-tags a, .widget_tag_cloud a, .tagline, input[type=submit], input[type=text],
+.comment-footer span, .bypostauthor > .comment .author-name:after, .further-reading span, .widget_tag_cloud a, .tagline, input[type=submit], input[type=text],
 input[type=email],
 input[type=password],
 input[type=number],
@@ -74,13 +74,13 @@ textarea, .wp-caption-text,
   font-weight: 400;
 }
 
-.sidebar-primary .widget_rss .widget-title a, .post-tags a, .widget_tag_cloud a, .menu-primary a, .site-title a {
+.sidebar-primary .widget_rss .widget-title a, .widget_tag_cloud a, .menu-primary a, .site-title a {
   color: white;
 }
-.sidebar-primary .widget_rss .widget-title a:link, .post-tags a:link, .widget_tag_cloud a:link, .menu-primary a:link, .site-title a:link, .sidebar-primary .widget_rss .widget-title a:visited, .post-tags a:visited, .widget_tag_cloud a:visited, .menu-primary a:visited, .site-title a:visited {
+.sidebar-primary .widget_rss .widget-title a:link, .widget_tag_cloud a:link, .menu-primary a:link, .site-title a:link, .sidebar-primary .widget_rss .widget-title a:visited, .widget_tag_cloud a:visited, .menu-primary a:visited, .site-title a:visited {
   color: white;
 }
-.sidebar-primary .widget_rss .widget-title a:hover, .post-tags a:hover, .widget_tag_cloud a:hover, .menu-primary a:hover, .site-title a:hover, .sidebar-primary .widget_rss .widget-title a:active, .post-tags a:active, .widget_tag_cloud a:active, .menu-primary a:active, .site-title a:active, .sidebar-primary .widget_rss .widget-title a:focus, .post-tags a:focus, .widget_tag_cloud a:focus, .menu-primary a:focus, .site-title a:focus {
+.sidebar-primary .widget_rss .widget-title a:hover, .widget_tag_cloud a:hover, .menu-primary a:hover, .site-title a:hover, .sidebar-primary .widget_rss .widget-title a:active, .widget_tag_cloud a:active, .menu-primary a:active, .site-title a:active, .sidebar-primary .widget_rss .widget-title a:focus, .widget_tag_cloud a:focus, .menu-primary a:focus, .site-title a:focus {
   color: white;
 }
 
@@ -101,11 +101,11 @@ textarea, .wp-caption-text,
 
 body {
   height: 100%;
-  font-size: 100%;
+  font-size: 105%;
   margin: 0;
   padding: 0;
   font-family: "Lato", sans-serif;
-  line-height: 1.5;
+  line-height: 1.65;
   background: #27292B;
   color: #27292B;
   -webkit-font-smoothing: subpixel-antialiased;
@@ -162,10 +162,13 @@ a {
   transition: color 0.2s ease-in-out;
 }
 a:link, a:visited {
-  color: #27292B;
+  color: #008080;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.2rem;
 }
 a:hover, a:active, a:focus {
-  color: #5c6066;
+  color: #00B0B0;
+  text-decoration-style: solid;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -797,6 +800,15 @@ a img {
     margin-bottom: 1.5em;
   }
 }
+@media all and (max-width: 59.375em) {
+  .archive .post-header,
+  .blog .post-header,
+  .search .post-header {
+    margin: 0.5em 0;
+    font-size: 0.75em;
+  }
+
+}
 /* Styles for the primary menu */
 .menu-primary {
   max-height: 0;
@@ -1105,25 +1117,44 @@ a img {
   border-bottom: solid 1px #D9D9D9;
 }
 
-.post-categories {
-  margin: 1.5em 0;
+.post-categories,
+.post-tags {
+  display: inline;
 }
-.post-categories a {
+.post-categories a,
+.post-tags a {
   display: inline-block;
-  margin-left: 0.75em;
+}
+.post-categories > ul,
+.post-tags ul {
+  display: inline;
+  list-style: none;
+  margin: unset;
+}
+.post-categories > ul > li,
+.post-tags > ul > li {
+  display: inline;
+}
+.post-meta ~ .post-categories::before,
+.post-meta ~ .post-tags::before {
+  content: "\00a0\00a0·\00a0\00a0"; /* non breaking spaces */
+}
+.post-categories li:not(:last-child)::after,
+.post-tags li:not(:last-child)::after {
+  content: ", ";
 }
 
-.post-tags, .widget_tag_cloud {
+.widget_tag_cloud {
   margin: 1.5em 0 0;
 }
-.post-tags ul, .widget_tag_cloud ul {
+.widget_tag_cloud ul {
   list-style: none;
   margin: 0;
 }
-.post-tags li, .widget_tag_cloud li {
+.widget_tag_cloud li {
   display: inline-block;
 }
-.post-tags a, .widget_tag_cloud a {
+.widget_tag_cloud a {
   line-height: 1;
   display: inline-block;
   padding: 6px 20px;
@@ -1133,7 +1164,7 @@ a img {
   text-decoration: none;
   transition: background 0.2s ease-in-out;
 }
-.post-tags a:hover, .widget_tag_cloud a:hover, .post-tags a:active, .widget_tag_cloud a:active, .post-tags a:focus, .widget_tag_cloud a:focus {
+.widget_tag_cloud a:hover, .widget_tag_cloud a:active, .widget_tag_cloud a:focus {
   background: #5c6066;
 }
 
@@ -1154,6 +1185,8 @@ a img {
 .archive .entry,
 .search .entry {
   text-align: center;
+  display: flex;
+  flex-direction: row-reverse;
 }
 .blog .post-content,
 .archive .post-content,
@@ -1179,6 +1212,59 @@ a img {
   padding-top: 0;
   margin-bottom: 1.5em;
   border-top: none;
+}
+.archive .featured-image,
+.blog .featured-image,
+.search .featured-image {
+  height: unset;
+  padding-bottom: unset;
+  display: flex;
+}
+
+.blog .entry article,
+.archive .entry article,
+.search .entry article {
+  padding: 1em 4%;
+  width: 100%;
+}
+
+.archive .featured-image > a,
+.blog .featured-image > a,
+.search .featured-image > a {
+  position: unset;
+}
+.archive .featured-image > img,
+.blog .featured-image > img,
+.search .featured-image > img,
+.archive .featured-image > a > img,
+.blog .featured-image > a > img,
+.search .featured-image > a > img {
+  position: unset;
+  object-fit: cover;
+  max-width: 200px;
+  max-height: 200px;
+  background-color: black;
+}
+
+.blog .post-header,
+.archive .post-header,
+.search .post-header {
+  text-align: left;
+  margin: 0.75em 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.blog .post-title,
+.archive .post-title,
+.search .post-title {
+  text-align: left;
+  font-size: 2em;
+  width: 100%;
+}
+.blog .post-meta,
+.archive .post-meta,
+.search .post-meta {
+  font-size: 1em;
 }
 
 .entry.protected input[type=password] {
@@ -1282,7 +1368,7 @@ a img {
     margin-top: 1.5em;
   }
 
-  .has-post-thumbnail .post-header {
+  .single-post .has-post-thumbnail .post-header {
     margin-top: 0;
   }
 
@@ -1509,7 +1595,7 @@ a img {
 }
 
 .archive-header p {
-  margin: 0.75em 0 0;
+  margin: 0 0;
 }
 
 .more-link-wrapper {
@@ -1845,6 +1931,9 @@ a img {
   .main .search-form-container input[type=submit] {
     width: calc(30% - 6px);
   }
+}
+.search .archive-header > .post-header {
+  display: unset; /* compensate the 'flex' value for post-headers in list */
 }
 .search .archive-header .post-title {
   margin-bottom: 24px;
@@ -2210,6 +2299,47 @@ span.bbp-admin-links a,
 #bbpress-forums div.bbp-reply-author img.avatar,
 #bbpress-forums #bbp-single-user-details #bbp-user-avatar img.avatar {
   border-radius: 50%;
+}
+
+.wp-block-latest-posts.wp-block-latest-posts__list {
+  list-style: circle;
+}
+
+.wp-block-tag-cloud {
+  font-size: 1em;
+  padding: 0;
+  margin: 1.5em;
+}
+
+.wp-block-tag-cloud a {
+  display: list-item;
+  font-size: 1em !important;
+}
+
+.post-content li:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.wp-block-details {
+  margin: 10px;
+  border: thin solid #27292B;
+  background-color: #F0F1F2;
+}
+
+.wp-block-details summary {
+  margin: 10px 10px 10px 15px;
+}
+
+.wp-block-details p {
+  margin: 10px;
+  padding: 5px 10px;
+  text-align: justify;
+}
+
+dt {
+  font-weight: bold;
+  font-size: 115%;
+  font-variant: small-caps;
 }
 
 /*

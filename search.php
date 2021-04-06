@@ -7,9 +7,9 @@
 			$total_results = $wp_query->found_posts;
 			$s             = htmlentities( $s );
 			if ( $total_results ) {
-				printf( esc_html( _n( '%1$d search result for "%2$s"', '%1$d search results for "%2$s"', $total_results, 'author' ) ), $total_results, $s );
+				printf( esc_html( _n( '%1$d search result for "%2$s"', 'Atopados %1$d resultados para "%2$s"', $total_results, 'author' ) ), $total_results, $s );
 			} else {
-				printf( esc_html__( 'No search results for "%s"', 'author' ), $s );
+				printf( esc_html__( 'Non hai resultados para "%s"', 'author' ), $s );
 			}
 			?>
 		</h1>
@@ -34,7 +34,7 @@ the_posts_pagination();
 $total_results = $wp_query->found_posts;
 if ( $total_results ) { ?>
 	<div class="search-bottom archive-header">
-		<p><?php _e( "Can't find what you're looking for?  Try refining your search:", "author" ); ?></p>
+		<p><?php _e( "Non atopaches o que buscabas? Proba con outros termos de busca:", "author" ); ?></p>
 		<?php get_search_form(); ?>
 	</div>
 <?php }

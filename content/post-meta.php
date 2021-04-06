@@ -12,5 +12,6 @@
     } elseif ($show_date != 'no') {
         printf(_x('Published on %1$s', 'This blog post was published on X date', 'author'), $date);
     }
+    echo $date;
     ?>
 </span>

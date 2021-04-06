@@ -436,6 +436,7 @@ if (! function_exists('ct_author_social_array')) {
             'reddit'        => 'author_reddit_profile',
             'researchgate'  => 'author_researchgate_profile',
             'signal-messenger' => 'author_signal_messenger_profile',
+            'rss'           => 'author_rss_profile',
             'skype'         => 'author_skype_profile',
             'slack'         => 'author_slack_profile',
             'slideshare'    => 'author_slideshare_profile',
@@ -907,16 +908,27 @@ if (! function_exists(('ct_author_pagination'))) {
             }
         }
         // Output pagination if Jetpack not installed, otherwise check if infinite scroll is active before outputting
-        if (!class_exists('Jetpack')) {
+        if (!class_exists( 'Jetpack') ) {
             the_posts_pagination(array(
-        'prev_text' => esc_html__('Previous', 'author'),
-        'next_text' => esc_html__('Next', 'author')
-      ));
-        } elseif (!Jetpack::is_module_active('infinite-scroll')) {
+              'prev_text' => esc_html__('Máis novas', 'author'),
+              'next_text' => esc_html__('Máis vellas', 'author')
+            ) );
+          } elseif (!Jetpack::is_module_active( 'infinite-scroll' ) ) {
             the_posts_pagination(array(
-        'prev_text' => esc_html__('Previous', 'author'),
-        'next_text' => esc_html__('Next', 'author')
-      ));
+              'prev_text' => esc_html__('Máis novas', 'author'),
+              'next_text' => esc_html__('Máis vellas', 'author')
+            ) );
+          }
         }
     }
-}
+
+function remove_page_from_query_string($query_string)
+    {
+        if (isset($query_string['name']) && $query_string['name'] == 'page' && isset($query_string['page'])) {
+            unset($query_string['name']);
+            $query_string['paged'] = $query_string['page'];
+        }
+        return $query_string;
+    }
+add_filter('request', 'remove_page_from_query_string');
+
