@@ -4,7 +4,7 @@
 function ct_author_load_scripts_styles()
 {
     $font_args = array(
-        'family'  => urlencode('Rokkitt:400,700|Lato:400,700'),
+        'family'  => urlencode('Open+Sans:300,400,700|Signika:300,400,700'),
         'subset'  => urlencode('latin,latin-ext'),
         'display' => 'swap'
     );
@@ -22,11 +22,7 @@ function ct_author_load_scripts_styles()
 
     wp_enqueue_style('ct-author-font-awesome', get_template_directory_uri() . '/assets/font-awesome/css/all.min.css');
 
-    if (is_rtl()) {
-        wp_enqueue_style('ct-author-rtl-style', get_template_directory_uri() . '/style-rtl.min.css');
-    } else {
-        wp_enqueue_style('ct-author-style', get_stylesheet_uri());
-    }
+    wp_enqueue_style('ct-author-style', get_stylesheet_uri());
     
 
     // enqueue comment-reply script only on posts & pages with comments open ( included in WP core )
@@ -52,11 +48,11 @@ add_action('wp_enqueue_scripts', 'ct_author_load_scripts_styles');
 function ct_author_enqueue_admin_styles($hook)
 {
     if ($hook == 'appearance_page_author-options') {
-        wp_enqueue_style('ct-author-admin-styles', get_template_directory_uri() . '/styles/admin.min.css');
+        wp_enqueue_style('ct-author-admin-styles', get_template_directory_uri() . '/styles/admin.css');
     }
     if ($hook == 'post.php' || $hook == 'post-new.php') {
         $font_args = array(
-            'family' => urlencode('Rokkitt:400,700|Lato:400,700'),
+            'family' => urlencode('Open+Sans:300,400,700|Signika:300,400,700'),
             'subset' => urlencode('latin,latin-ext')
         );
         $fonts_url = add_query_arg($font_args, '//fonts.googleapis.com/css');
@@ -69,7 +65,7 @@ add_action('admin_enqueue_scripts', 'ct_author_enqueue_admin_styles');
 // Customizer scripts
 function ct_author_enqueue_customizer_scripts()
 {
-    wp_enqueue_style('ct-author-customizer-styles', get_template_directory_uri() . '/styles/customizer.min.css');
+    wp_enqueue_style('ct-author-customizer-styles', get_template_directory_uri() . '/styles/customizer.css');
     wp_enqueue_script('ct-author-customizer-js', get_template_directory_uri() . '/js/build/customizer.min.js', array( 'jquery' ), '', true);
 }
 add_action('customize_controls_enqueue_scripts', 'ct_author_enqueue_customizer_scripts');

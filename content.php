@@ -3,10 +3,10 @@
 	<?php ct_author_featured_image(); ?>
 	<article>
 		<div class='post-header'>
-			<h1 class='post-title'><?php the_title(); ?></h1>
 			<?php get_template_part( 'content/post-meta' ); ?>
 			<?php get_template_part( 'content/post-categories' ); ?>
 			<?php get_template_part( 'content/post-tags' ); ?>
+			<h1 class='post-title'><?php the_title(); ?></h1>
 		</div>
 		<div class="post-content">
 			<?php ct_author_output_last_updated_date(); ?>
@@ -18,4 +18,5 @@
 		</div>
 	</article>
 	<?php do_action( 'post_after' ); ?>
+	<?php comments_template(); ?>
 </div>

@@ -10,6 +10,9 @@
 			<?php get_template_part( 'content/post-categories' ); ?>
 			<?php get_template_part( 'content/post-tags' ); ?>
 		</div>
+		<div class="post-content">
+			<?php the_excerpt(); ?>
+		</div>
 	</article>
 	<?php do_action( 'archive_post_after' ); ?>
 </div>

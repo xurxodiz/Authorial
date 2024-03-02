@@ -30,29 +30,8 @@ module.exports = function(grunt) {
                 options: {
                     spawn: false
                 }
-            },
-            css: {
-                files: ['sass/*.scss'],
-                tasks: ['sass', 'autoprefixer', 'cssmin', 'cssjanus'],
-                options: {
-                    livereload: true,
-                    spawn: false
-                }
             }
-        },
-        sass: {
-            dist: {
-                options: {
-                    style: 'expanded'
-                },
-                files: {
-                    'style.css': 'sass/style.scss',
-                    'styles/customizer.css': 'sass/customizer.scss',
-                    'styles/admin.css': 'sass/admin.scss',
-                    'styles/editor-style.css': 'sass/editor-style.scss'
-                }
-            }
-        },
+        }
         autoprefixer: {
             dist: {
                 options: {
@@ -63,38 +42,6 @@ module.exports = function(grunt) {
                     'styles/customizer.css': 'styles/customizer.css',
                     'styles/admin.css': 'styles/admin.css'
                 }
-            }
-        },
-        cssjanus: {
-            dev: {
-                options: {
-                    swapLtrRtlInUrl: false // replace 'ltr' with 'rtl'
-                },
-                src: ['style.css'],
-                dest: 'style-rtl.css'
-            }
-        },
-        cssmin: {
-            combine: {
-                files: {
-                    'style.min.css': ['style.css'],
-                    'styles/customizer.min.css': ['styles/customizer.css'],
-                    'styles/admin.min.css': ['styles/admin.css'],
-                    'style-rtl.min.css': ['style-rtl.css']
-                }
-            }
-        },
-        compress: {
-            main: {
-                options: {
-                    archive: '/Users/bensibley/Desktop/ignite.zip'
-                },
-                files: [
-                    {
-                        src: ['**', '!node_modules/**','!sass/**', '!gruntfile.js', '!package.json', '!style-prefixed.css','!/.git/','!/.idea/','!/.sass-cache/','!**.DS_Store'],
-                        filter: 'isFile'
-                    }
-                ]
             }
         },
         makepot: {
@@ -145,39 +92,19 @@ module.exports = function(grunt) {
                 colors: true
             }
         },
-        excludeFiles: '--exclude "*.gitignore" --exclude ".sass-cache/" --exclude "*.DS_Store" --exclude ".git/" --exclude ".idea/" --exclude "gruntfile.js" --exclude "node_modules/" --exclude "package.json" --exclude "sass/" --exclude "styles/admin.css.map" --exclude "styles/customizer.css.map" --exclude "styles/editor-style.css.map" --exclude "package-lock.json" --exclude "style.css.map"',
-        shell: {
-            zip: {
-                command: [
-                    // delete existing copies on Desktop (if they exist)
-                    'rm -R "/Users/bensibley/Dropbox/Compete Themes/Distribution/author" || true',
-                    'rm -R "/Users/bensibley/Dropbox/Compete Themes/Distribution/author.zip" || true',
-                    // copy plugin folder to desktop without any project/meta files
-                    'rsync -r "/Users/bensibley/Sites/Compete Themes/author/wp-content/themes/author" "/Users/bensibley/Dropbox/Compete Themes/Distribution/" <%= excludeFiles %>',
-                    // open desktop
-                    'cd "/Users/bensibley/Dropbox/Compete Themes/Distribution/"',
-                    // zip the author folder on desktop
-                    'zip -r author.zip author'
-                ].join('&&')
-            }
-        }
+        excludeFiles: '--exclude "*.gitignore" --exclude ".sass-cache/" --exclude "*.DS_Store" --exclude ".git/" --exclude ".idea/" --exclude "gruntfile.js" --exclude "node_modules/" --exclude "package.json" --exclude "sass/" --exclude "styles/admin.css.map" --exclude "styles/customizer.css.map" --exclude "styles/editor-style.css.map" --exclude "package-lock.json" --exclude "style.css.map"'
     });
 
     // 3. Where we tell Grunt we plan to use this plug-in.
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-autoprefixer');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-wp-i18n');
     grunt.loadNpmTasks('grunt-phpcs');
     grunt.loadNpmTasks('grunt-phpunit');
-    grunt.loadNpmTasks('grunt-cssjanus');
-    grunt.loadNpmTasks('grunt-shell');
 
     // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
-    grunt.registerTask('default', ['concat', 'uglify', 'watch', 'sass', 'autoprefixer', 'cssmin', 'compress', 'makepot', 'phpcs', 'phpunit', 'cssjanus', 'shell']);
+    grunt.registerTask('default', ['concat', 'uglify', 'watch', 'autoprefixer', 'makepot', 'phpcs', 'phpunit']);
 
 };

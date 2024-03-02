@@ -8,43 +8,6 @@ require_once(trailingslashit(get_template_directory()) . 'inc/customizer.php');
 require_once(trailingslashit(get_template_directory()) . 'inc/deprecated.php');
 require_once(trailingslashit(get_template_directory()) . 'inc/last-updated-meta-box.php');
 require_once(trailingslashit(get_template_directory()) . 'inc/scripts.php');
-// TGMP
-require_once(trailingslashit(get_template_directory()) . 'tgm/class-tgm-plugin-activation.php');
-
-function ct_author_register_required_plugins()
-{
-    $plugins = array(
-
-        array(
-            'name'      => 'Independent Analytics',
-            'slug'      => 'independent-analytics',
-            'required'  => false,
-        ),
-    );
-
-    $config = array(
-        'id'           => 'ct-author',
-        'default_path' => '',
-        'menu'         => 'tgmpa-install-plugins',
-        'has_notices'  => true,
-        'dismissable'  => true,
-        'dismiss_msg'  => '',
-        'is_automatic' => false,
-        'message'      => '',
-        'strings'      => array(
-            'page_title'                      => __('Install Recommended Plugins', 'author'),
-            'menu_title'                      => __('Recommended Plugins', 'author'),
-            'notice_can_install_recommended'     => _n_noop(
-                'The makers of the Author theme now recommend installing Independent Analytics, their new plugin for visitor tracking: %1$s.',
-                'The makers of the Author theme now recommend installing Independent Analytics, their new plugin for visitor tracking: %1$s.',
-                'author'
-            ),
-        )
-    );
-
-    tgmpa($plugins, $config);
-}
-add_action('tgmpa_register', 'ct_author_register_required_plugins');
 
 if (! function_exists(('ct_author_set_content_width'))) {
     function ct_author_set_content_width()
@@ -114,13 +77,6 @@ if (! function_exists('ct_author_theme_setup')) {
         register_nav_menus(array(
             'primary' => esc_html__('Primary', 'author')
         ));
-
-        // Add WooCommerce support
-        add_theme_support('woocommerce');
-        // Add support for WooCommerce image gallery features
-        add_theme_support('wc-product-gallery-zoom');
-        add_theme_support('wc-product-gallery-lightbox');
-        add_theme_support('wc-product-gallery-slider');
     }
 }
 add_action('after_setup_theme', 'ct_author_theme_setup', 10);
@@ -154,52 +110,63 @@ if (! function_exists(('ct_author_register_widget_areas'))) {
 add_action('widgets_init', 'ct_author_register_widget_areas');
 
 if (! function_exists('ct_author_customize_comments')) {
-    function ct_author_customize_comments($comment, $args, $depth)
-    {
+    function ct_author_customize_comments( $comment, $args, $depth ) {
         $GLOBALS['comment'] = $comment;
-        $comment_type       = $comment->comment_type; ?>
-		<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
-		<article id="comment-<?php comment_ID(); ?>" class="comment">
-			<div class="comment-author">
-				<?php
-                // if not a pingback
-                if ($comment_type !== 'pingback') {
-                    // if site admin and avatar uploaded
-                    if ($comment->comment_author_email === get_option('admin_email') && get_theme_mod('avatar_method') == 'upload' && get_theme_mod('comment_avatar') == 'yes') {
-                        echo '<img alt="' . get_comment_author() . '" class="avatar avatar-48 photo" src="' . esc_url(ct_author_output_avatar()) . '" height="48" width="48" />';
-                    } else {
-                        echo get_avatar(get_comment_author_email(), 48, '', get_comment_author());
-                    }
-                } ?>
-				<span class="author-name"><?php comment_author_link(); ?></span>
-			</div>
-			<div class="comment-content">
-				<?php if ($comment->comment_approved == '0') : ?>
-					<em><?php _e('Your comment is awaiting moderation.', 'author') ?></em>
-					<br/>
-				<?php endif; ?>
-				<?php comment_text(); ?>
-			</div>
-			<?php
-            // if not a pingback
-            if ($comment_type !== 'pingback') { ?>
-				<div class="comment-footer">
-                    <span class="comment-link">
-                        <a href="<?php echo esc_url(get_comment_link()); ?>">
-                            # <span class="comment-date"><?php comment_date(); ?></span>
+        switch ( $comment->comment_type ) :
+            case 'tag':
+            case 'rsvp:yes':
+            case 'rsvp:no':
+            case 'rsvp:maybe':
+            case 'rsvp:interested':
+            case 'invited':
+            case 'listen':
+            case 'read':
+            case 'watch':
+            case 'follow':
+                /* we don't support these */
+                break;
+
+            case 'pingback':
+            case 'trackback':
+            case 'bookmark':
+            case 'like':
+            case 'mention':
+            case 'other':
+        ?>
+                <li class="post mention">
+                <p><span class="comment_type"><?php echo $comment->comment_type; ?></span> <?php comment_author_link(); ?></p>
+        <?php
+                break;
+            case 'reply':
+            default:
+        ?>
+                <li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
+                <article id="comment-<?php comment_ID(); ?>" class="comment">
+                    <div class="comment-meta commentmetadata comment-author">
+                    <span class="comment-author-avatar"><?php echo get_avatar( $comment, 48 ); ?></span>
+                    <div class="vcard h-card p-author">
+                        <cite class="fn theme-genericon"><?php comment_author_link(); ?></cite>
+                    </div><!-- .comment-author .vcard -->
+
+                    <div class="comment-date">
+                        <a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"
+                        title="<?php echo get_comment_time(); ?>">
+                        <time class="dt-published" datetime="<?php comment_time( 'c' ); ?>">
+                            <?php echo get_comment_date(); ?>
+                        </time>
                         </a>
-                    </span>
-					<?php comment_reply_link(array_merge($args, array(
-                        'reply_text' => _x('Reply', 'verb: reply to this comment', 'author'),
-                        'depth'      => $depth,
-                        'max_depth'  => $args['max_depth']
-                    ))); ?>
-					<?php edit_comment_link(_x('Edit', 'verb: edit this comment', 'author')); ?>
-				</div>
-			<?php } ?>
-		</article>
-		<?php
+                    </div><!-- .comment-date -->
+                    </div><!-- .comment-meta .commentmetadata -->
+
+                    <div class="comment-content">
+                    <?php comment_text(); ?>
+                    </div>
+                </article><!-- #comment-## -->
+        <?php
+                break;
+        endswitch;
     }
+
 }
 
 if (! function_exists('ct_author_update_fields')) {
@@ -239,13 +206,6 @@ add_filter('comment_form_default_fields', 'ct_author_update_fields');
 if (! function_exists('ct_author_update_comment_field')) {
     function ct_author_update_comment_field($comment_field)
     {
-        // don't filter the WooCommerce review form
-        if (function_exists('is_woocommerce')) {
-            if (is_woocommerce()) {
-                return $comment_field;
-            }
-        }
-
         $comment_field =
             '<p class="comment-form-comment">
 	            <label for="comment">' . _x("Comment", "noun", "author") . '</label>
