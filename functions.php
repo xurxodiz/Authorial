@@ -109,6 +109,39 @@ if (! function_exists(('ct_author_register_widget_areas'))) {
 }
 add_action('widgets_init', 'ct_author_register_widget_areas');
 
+if (! function_exists('ct_internal_translate_type')) {
+    function ct_internal_translate_type( $comment_type ) {
+        switch ( $comment_type ) :
+            case 'mention':
+                return "Mencionado por";
+            case 'reply':
+                return "Resposta";
+            case 'comment':
+                return "Comentario";
+            case 'tag':
+                return "Etiquetado en";
+            case 'bookmark':
+                return "En marcadores de";
+            case 'like':
+                return "Gústalle a";
+            case 'rsvp:yes':
+            case 'rsvp:no':
+            case 'rsvp:maybe':
+            case 'rsvp:interested':
+            case 'invited':
+            case 'listen':
+            case 'read':
+            case 'watch':
+            case 'follow':    
+            case 'pingback':
+            case 'trackback':
+            default:
+                return $comment_type;
+        endswitch;
+    }
+
+}
+
 if (! function_exists('ct_author_customize_comments')) {
     function ct_author_customize_comments( $comment, $args, $depth ) {
         $GLOBALS['comment'] = $comment;
@@ -130,38 +163,51 @@ if (! function_exists('ct_author_customize_comments')) {
             case 'trackback':
             case 'bookmark':
             case 'like':
-            case 'mention':
-            case 'other':
         ?>
                 <li class="post mention">
-                <p><span class="comment_type"><?php echo $comment->comment_type; ?></span> <?php comment_author_link(); ?></p>
+                    <p><span class="comment_type"><?php echo ct_internal_translate_type( $comment->comment_type ); ?></span>
+                    <?php comment_author_link(); ?></p>
+                </li>
+        <?php
+                break;
+            case 'mention':
+            case 'other':
+                $url = get_comment_meta( $comment->comment_ID, 'url', true );
+                $author = get_comment_author( $comment );
+        ?>
+                <li class="post mention">
+                    <p><span class="comment_type"><?php echo ct_internal_translate_type( $comment->comment_type ); ?></span>
+                    <a href="<?php echo $url; ?>" class="url" rel="ugc"><?php echo $author; ?></a></p>
+                </li>
         <?php
                 break;
             case 'reply':
+            case 'comment':
             default:
         ?>
                 <li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
-                <article id="comment-<?php comment_ID(); ?>" class="comment">
-                    <div class="comment-meta commentmetadata comment-author">
-                    <span class="comment-author-avatar"><?php echo get_avatar( $comment, 48 ); ?></span>
-                    <div class="vcard h-card p-author">
-                        <cite class="fn theme-genericon"><?php comment_author_link(); ?></cite>
-                    </div><!-- .comment-author .vcard -->
+                    <article id="comment-<?php comment_ID(); ?>" class="comment">
+                        <div class="comment-meta commentmetadata comment-author">
+                        <span class="comment-author-avatar"><?php echo get_avatar( $comment, 48 ); ?></span>
+                        <div class="vcard h-card p-author">
+                            <cite class="fn theme-genericon"><?php comment_author_link(); ?></cite>
+                        </div><!-- .comment-author .vcard -->
 
-                    <div class="comment-date">
-                        <a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"
-                        title="<?php echo get_comment_time(); ?>">
-                        <time class="dt-published" datetime="<?php comment_time( 'c' ); ?>">
-                            <?php echo get_comment_date(); ?>
-                        </time>
-                        </a>
-                    </div><!-- .comment-date -->
-                    </div><!-- .comment-meta .commentmetadata -->
+                        <div class="comment-date">
+                            <a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"
+                            title="<?php echo get_comment_time(); ?>">
+                            <time class="dt-published" datetime="<?php comment_time( 'c' ); ?>">
+                                <?php echo get_comment_date(); ?>
+                            </time>
+                            </a>
+                        </div><!-- .comment-date -->
+                        </div><!-- .comment-meta .commentmetadata -->
 
-                    <div class="comment-content">
-                    <?php comment_text(); ?>
-                    </div>
-                </article><!-- #comment-## -->
+                        <div class="comment-content">
+                        <?php comment_text(); ?>
+                        </div>
+                    </article><!-- #comment-## -->
+                </li>
         <?php
                 break;
         endswitch;
