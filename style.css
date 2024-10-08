@@ -126,7 +126,7 @@ body {
 }
 
 .max-width {
-  max-width: 1400px;
+  max-width: 1800px;
   margin: 0 auto;
   min-height: 100%;
 }
@@ -198,6 +198,7 @@ ol {
   font-size: 1em;
   padding: 0;
   margin: 1.5em;
+  margin-left: 2.5em;
 }
 ul ul, ul ol,
 ol ul,
