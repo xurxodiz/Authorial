@@ -21,7 +21,7 @@ Author is distributed under the terms of the GNU GPL
 :root {
   --color-body: #27292B;
   --color-clear: #FDFDFD;
-  --color-soft: #D9D9D9;
+  --color-soft: #EFEFEF;
   --color-accent: #27292B;
   --color-strong: #3E4145;
   --color-link: #008080;
@@ -1300,6 +1300,7 @@ a img {
 
 .wp-block-code code {
   background: none;
+  padding: 1em;
 }
 
 .last-updated {
@@ -1914,23 +1915,38 @@ span.bbp-admin-links a,
   margin-bottom: 10px;
 }
 
-.wp-block-details {
-  margin: 10px;
-  border: thin solid var(--color-accent);
+.wp-block-details, .wp-block-code {
+  margin: 1.5em;
+  border: thin solid transparent;
   background-color: var(--color-soft);
+  border-radius: 10px;
+}
+
+.wp-block-details {
+  padding: 0 1.5em;
+}
+
+.wp-block-code {
+  padding: 1.5em 2em;
 }
 
 .wp-block-details summary {
-  margin: 10px 10px 10px 15px;
+  margin: 1.25em;
+  font-weight: bold;
+}
+
+.wp-block-details summary:has(+ p) {
+  margin-bottom: 0.75em;
+}
+
+.wp-block-details.is-style-aside summary {
+  display: none;
 }
 
 .wp-block-details p {
-  margin: 10px;
-  padding: 5px 10px;
+  padding: 0.5em;
+  margin: 0.75em 0;
   text-align: justify;
-}
-.wp-block-details summary + p {
-  margin-top: 15px;
 }
 
 dt {

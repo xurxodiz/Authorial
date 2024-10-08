@@ -892,3 +892,12 @@ function remove_page_from_query_string($query_string)
     }
 add_filter('request', 'remove_page_from_query_string');
 
+
+add_action('init', function() {
+	$inline_css = '.is-style-aside, .editor-styles-wrapper .is-style-aside { background-color: #efefef; }';
+	register_block_style('core/details', [
+		'name' => 'aside',
+		'label' => __('Aside', 'authorial'),
+		'inline_style' => $inline_css
+	]);
+});
