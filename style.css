@@ -158,8 +158,13 @@ body {
     min-height: calc(100vh - 68px);
   }
 }
+
 p {
   margin: 1.5em 0;
+}
+
+span.line {
+  display: inline-block;
 }
 
 a {
@@ -2083,35 +2088,3 @@ li.mention a {
     margin-right: 50px;
   }
 }
-
-/*@media screen and (min-width: 1032px) {
-  .comment-list {
-    max-width: 984px !important;
-  }
-
-  .comment-content {
-    margin-left: 75px;
-  }
-
-  .comment-meta {
-    min-width: 200px;
-  }
-}
-
-@media screen and (min-width: 1176px) {
-  .comment-list {
-    max-width: 1128px !important;
-  }
-
-  .comment-content {
-    margin-left: 290px;
-  }
-
-  .comment-meta {
-    width: 240px;
-  }
-
-  .comment-author .comment-author-avatar {
-    margin-left: 0;
-  }
-}*/

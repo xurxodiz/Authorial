@@ -4,7 +4,8 @@ if ( comments_open() ) { ?>
 	<section id="comments" class="comments">
 		<div class="comments-number">
 			<p>
-				Podes interaxir con esta entrada de moitas formas: con pingbacks, con webmentions ou simplemente respondendo a través do Fediverso, por exemplo visitándela en Mastodon.
+				<span class="line">Podes interaxir con esta entrada de moitas formas: con pingbacks, con webmentions…</span>
+				<span class="line">ou simplemente respondendo a través do Fediverso, por exemplo visitándoa en Mastodon.</span>
 			</p>
 		</div>
 		<?php if ( have_comments() ) { ?>
