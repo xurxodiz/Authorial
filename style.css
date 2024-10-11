@@ -1046,7 +1046,7 @@ a img {
   position: relative;
   margin-bottom: 1.5em;
 }
-.entry article {
+.entry .post > article {
   padding: 1.5em 7.4074%;
   background: var(--color-clear);
 }
@@ -1993,7 +1993,11 @@ dt {
   display: flex;
 }
 
-.comment-list li.mention {
+.comment li.webmention {
+  border: 10px solid var(--color-soft);
+}
+
+.comment-list li.pingback {
   text-transform: uppercase;
   font-size: 0.75em;
   font-weight: bold;
@@ -2003,11 +2007,11 @@ dt {
   margin-left: 1.5em;
 }
 
-li.mention p {
+li.pingback p {
   margin: 0.75em 0;
 }
 
-li.mention a {
+li.pingback a {
   text-transform: none;
   font-weight: 300;
   font-size: 1.5em;
@@ -2041,18 +2045,8 @@ li.mention a {
   font-size: 1.1em;
 }
 
-.comment-author .avatar {
-  width: 48px;
-  height: 48px;
-  margin-right: 12px;
-  display: none;
-}
-
-.avatar {
-  border-radius: 50%;
-}
-
 .comment-author cite,
+.comment-type
 .comment-date {
   font-variant: all-petite-caps;
   font-size: 0.9em;
@@ -2061,15 +2055,9 @@ li.mention a {
 }
 
 @media screen and (min-width: 888px) {
-  .comment-list li.mention {
+  .comment-list li.pingback {
     padding-left: 110px;
   }
-
-  /*.comment-list li:not(.mention) {
-    min-height: 120px;
-  }
-  * reenable if display avatars
-  */
 
   .comment-meta {
     padding-left: 0;

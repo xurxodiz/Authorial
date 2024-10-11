@@ -183,7 +183,6 @@ if (! function_exists('ct_author_customize_comments')) {
             <li <?php comment_class('mention'); ?> id="li-comment-<?php comment_ID(); ?>">
                 <article id="comment-<?php comment_ID(); ?>" class="comment">
                     <div class="comment-meta commentmetadata comment-author">
-                        <span class="comment-author-avatar"><?php echo get_avatar( $comment, 48 ); ?></span>
                         <div class="vcard h-card p-author">
                             <cite class="fn theme-genericon">
                                 <a href="<?php echo $url; ?>" class="url" rel="ugc"><?php echo $url; ?></a>
@@ -215,7 +214,6 @@ if (! function_exists('ct_author_customize_comments')) {
             <li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
                 <article id="comment-<?php comment_ID(); ?>" class="comment">
                     <div class="comment-meta commentmetadata comment-author">
-                        <span class="comment-author-avatar"><?php echo get_avatar( $comment, 48 ); ?></span>
                         <div class="vcard h-card p-author">
                             <cite class="fn theme-genericon"><?php comment_author_link(); ?></cite>
                         </div><!-- .comment-author .vcard -->
