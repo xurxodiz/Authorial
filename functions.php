@@ -113,39 +113,39 @@ if (! function_exists('ct_internal_translate_type')) {
     function ct_internal_translate_type( $comment_type ) {
         switch ( $comment_type ) :
             case 'mention':
-                return "Mencionou isto en";
+                return "Mencionou isto";
             case 'reply':
-                return "Respondeu en";
+                return "Respondeu a isto";
             case 'comment':
-                return "Comentou isto en";
+                return "Comentou isto";
             case 'tag':
-                return "Etiquetou isto en";
+                return "Etiquetou isto";
             case 'bookmark':
-                return "En marcadores de";
+                return "Gardou isto";
             case 'like':
-                return "Gústalle a";
+                return "Gostou disto";
             case 'rsvp:yes':
-                return "Confirmou asistencia desde";
+                return "Confirmou asistencia";
             case 'rsvp:no':
-                return "Negou asistencia desde";
+                return "Negou asistencia";
             case 'rsvp:maybe':
-                return "Dixo que talvez asista desde";
+                return "Dixo asistir talvez";
             case 'rsvp:interested':
-                return "Expresou interese desde";
+                return "Expresou interese";
             case 'invited':
-                return "Convidou a asistir desde";
+                return "Convidou a asistir";
             case 'listen':
-                return "Escoitou desde";
+                return "Escoitou isto";
             case 'read':
-                return "Leu desde";
+                return "Leu isto";
             case 'watch':
-                return "Mirou isto desde";
+                return "Mirou isto";
             case 'follow':    
-                return "Seguiu desde";
+                return "Seguiu isto";
             case 'pingback':
-                return "Pingback";
+                return "Fixo pingback";
             case 'trackback':
-                return "Trackback";
+                return "Enviou trackback";
             default: /* ?? */
                 return $comment_type;
         endswitch;
@@ -157,101 +157,59 @@ if (! function_exists('ct_author_customize_comments')) {
     function ct_author_customize_comments( $comment, $args, $depth ) {
 
         $GLOBALS['comment'] = $comment;
+        /*
+            at the moment we expect protocol to be one of
+            null - for pingback, trackback and local comments
+            activitypub - for fediverse comments
+            webmention - for all its different types
+        */
         $protocol = get_comment_meta( $comment->comment_ID, 'protocol', true );
         $type = $comment->comment_type;
 
-        if ( in_array($type, array('pingback', 'trackback') ) ) {
+        ?>
+        <li <?php comment_class($protocol); ?> id="li-comment-<?php comment_ID(); ?>">
+            <article id="comment-<?php comment_ID(); ?>" class="comment">
 
-            ?>
-            <li class="post mention">
-                <p><span class="comment_type"><?php echo ct_internal_translate_type( $comment->comment_type ); ?></span>
-                <?php comment_author_link(); ?></p>
-            </li>
-            <?php
+                <div class="comment-meta commentmetadata comment-author">
 
-        } elseif ( $protocol == 'webmention' ) {
+                    <div class="vcard h-card p-author">
+                        <cite class="fn theme-genericon">
+                            <?php comment_author_link(); ?>
+                        </cite>
+                    </div>
 
-            $url = get_comment_meta( $comment->comment_ID, 'url', true );
-            $author = get_comment_author( $comment );
-            /*?>
-            <li class="post mention">
-                <p><span class="comment_type"><?php echo $author . '<br />'; ?><?php echo ct_internal_translate_type( $comment->comment_type ); ?></span>
-                <a href="<?php echo $url; ?>" class="url" rel="ugc"><?php echo $url; ?></a></p>
-            </li>*/
+                    <div class="comment-type">
+                        <?php echo ct_internal_translate_type( $comment->comment_type ); ?>
+                    </div>
 
-            ?>
-            <li <?php comment_class('mention'); ?> id="li-comment-<?php comment_ID(); ?>">
-                <article id="comment-<?php comment_ID(); ?>" class="comment">
-                    <div class="comment-meta commentmetadata comment-author">
-                        <div class="vcard h-card p-author">
-                            <cite class="fn theme-genericon">
-                                <a href="<?php echo $url; ?>" class="url" rel="ugc"><?php echo $url; ?></a>
-                            </cite>
-                        </div><!-- .comment-author .vcard -->
-
-                        <div class="comment-type">
-                            <?php echo ct_internal_translate_type( $comment->comment_type ); ?>
-                        </div>
-
-                        <div class="comment-date">
+                    <div class="comment-date">
+                        <a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"
+                        title="<?php echo get_comment_time(); ?>">
                             <time class="dt-published" datetime="<?php comment_time( 'c' ); ?>">
                                 <?php echo get_comment_date(); ?>
                             </time>
-                        </div><!-- .comment-date -->
-                    </div><!-- .comment-meta .commentmetadata -->
+                        </a>
+                    </div>
 
-                    <div class="comment-content">
+                </div>
+
+                <div class="comment-content">
+                    <?php
+                    if ( $protocol == 'webmention' ) {
+                        $url = get_comment_meta( $comment->comment_ID, 'url', true );
+                        ?>
                         <a href="<?php echo $url; ?>" class="url" rel="ugc"><?php echo $url; ?></a>
-                    </div>
-                </article><!-- #comment-## -->
-            </li>
-
-
-            <?php
-
-        } elseif ( $type == 'comment' ) {
-            ?>
-            <li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
-                <article id="comment-<?php comment_ID(); ?>" class="comment">
-                    <div class="comment-meta commentmetadata comment-author">
-                        <div class="vcard h-card p-author">
-                            <cite class="fn theme-genericon"><?php comment_author_link(); ?></cite>
-                        </div><!-- .comment-author .vcard -->
-
-                        <div class="comment-date">
-                            <a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"
-                            title="<?php echo get_comment_time(); ?>">
-                                <time class="dt-published" datetime="<?php comment_time( 'c' ); ?>">
-                                    <?php echo get_comment_date(); ?>
-                                </time>
-                            </a>
-                        </div><!-- .comment-date -->
-                    </div><!-- .comment-meta .commentmetadata -->
-
-                    <div class="comment-content">
-                        <?php comment_text(); ?>
-                    </div>
-                </article><!-- #comment-## -->
-            </li>
-            <?php
-        }
-        /* at the moment we expect protocol to be one of
-            null - for pingback and trackback (and local comments, which i've disabled)
-            activitypub - for comments
-            webmention - for comments and everything else
-
-        not supported types:
-            tag
-            rsvp:yes
-            rsvp:no
-            rsvp:maybe
-            rsvp:interested
-            invited
-            listen
-            read
-            watch
-            follow
-        */
+                        <?php
+                    } elseif ( $type == 'pingback' || $type == 'trackback' ) {
+                        comment_author_link();;
+                    } else {
+                        comment_text();
+                    }
+                    ?>
+                </div>
+            </article><!-- #comment-## -->
+        </li>
+        <?php
     }
 
 }

@@ -1046,7 +1046,7 @@ a img {
   position: relative;
   margin-bottom: 1.5em;
 }
-.entry .post > article {
+.entry > article {
   padding: 1.5em 7.4074%;
   background: var(--color-clear);
 }
@@ -1993,11 +1993,11 @@ dt {
   display: flex;
 }
 
-.comment li.webmention {
-  border: 10px solid var(--color-soft);
+.webmention {
+  background-color: var(--color-soft);
 }
 
-.comment-list li.pingback {
+.pingback {
   text-transform: uppercase;
   font-size: 0.75em;
   font-weight: bold;
@@ -2007,16 +2007,22 @@ dt {
   margin-left: 1.5em;
 }
 
-li.pingback p {
+.pingback p {
   margin: 0.75em 0;
 }
 
-li.pingback a {
+.pingback a {
   text-transform: none;
   font-weight: 300;
   font-size: 1.5em;
   display: inline-block;
   padding-left: 3.25em;
+}
+
+.webmention .comment-content {
+  font-size: 0.7em;
+  letter-spacing: 0.01em;
+  font-style: normal;
 }
 
 .comment-content {
@@ -2030,10 +2036,11 @@ li.pingback a {
 
 .comment-meta {
   padding: 0 1em;
-  line-height: 1.25em;
+  line-height: 1.1em;
   margin-bottom: 1em;
   min-width: 140px;
   max-width: 140px;
+  text-align: right;
 }
 
 .comment-meta a {
@@ -2046,7 +2053,7 @@ li.pingback a {
 }
 
 .comment-author cite,
-.comment-type
+.comment-type,
 .comment-date {
   font-variant: all-petite-caps;
   font-size: 0.9em;
@@ -2063,11 +2070,6 @@ li.pingback a {
     padding-left: 0;
     min-width: 200px;
     max-width: 200px;
-  }
-
-  .entry-meta,
-  .comment-meta {
-    text-align: right;
   }
 
   .comment-content {
