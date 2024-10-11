@@ -942,7 +942,7 @@ add_action('init', function() {
 	$inline_css = '.is-style-aside, .editor-styles-wrapper .is-style-aside { background-color: #efefef; }';
 	register_block_style('core/details', [
 		'name' => 'aside',
-		'label' => __('Aside', 'authorial'),
+		'label' => __('Aside', 'barthes'),
 		'inline_style' => $inline_css
 	]);
 });
