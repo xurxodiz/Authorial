@@ -1,6 +1,6 @@
 <?php
 
-if ( ! is_archive() || ! is_home() ) {
+if ( ( ! is_archive() ) || ( ! is_home() ) ) {
 	return;
 }
 
@@ -20,7 +20,15 @@ if ( is_tag() ) {
 <div class='archive-header'>
 	<i class="fas fa-<?php echo $icon_class; ?>" aria-hidden="true"></i>
 	<h1>
-		<?php is_archive() ?? the_archive_title() : echo 'Arquivo'; ?>
+		<?php if ( is_archive() ) {
+			the_archive_title();
+		} else {
+			echo 'Arquivo';
+		} ?>
 	</h1>
-	<?php is_archive() ?? the_archive_description() : echo "Todas as entradas existentes."; ?>
+	<?php if ( is_archive() ) {
+		the_archive_description();
+	} else {
+		echo "<p>Todas as entradas existentes.</p>";
+	} ?>
 </div>
