@@ -1245,7 +1245,6 @@ a img {
 .blog .entry article,
 .archive .entry article,
 .search .entry article {
-  padding: 1em;
   width: 100%;
 }
 
