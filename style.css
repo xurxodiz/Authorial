@@ -1999,33 +1999,13 @@ dt {
   display: flex;
 }
 
-.webmention {
+.webmention, .pingback {
   background-color: var(--color-soft);
+  border-radius: 10px;
 }
 
-.pingback {
-  text-transform: uppercase;
-  font-size: 0.75em;
-  font-weight: bold;
-  padding-top: 1em;
-  padding-left: 30px;
-  border-left: 1px solid var(--color-soft);
-  margin-left: 1.5em;
-}
-
-.pingback p {
-  margin: 0.75em 0;
-}
-
-.pingback a {
-  text-transform: none;
-  font-weight: 300;
-  font-size: 1.5em;
-  display: inline-block;
-  padding-left: 3.25em;
-}
-
-.webmention .comment-content {
+.webmention .comment-content,
+.pingback .comment-content {
   font-size: 0.7em;
   letter-spacing: 0.01em;
   font-style: normal;
@@ -2068,10 +2048,6 @@ dt {
 }
 
 @media screen and (min-width: 888px) {
-  .comment-list li.pingback {
-    padding-left: 110px;
-  }
-
   .comment-meta {
     padding-left: 0;
     min-width: 200px;
