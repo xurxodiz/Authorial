@@ -1,6 +1,6 @@
 <?php
 
-if ( ( ! is_archive() ) || ( ! is_home() ) ) {
+if ( ( ! is_archive() ) && ( ! is_home() ) ) {
 	return;
 }
 
