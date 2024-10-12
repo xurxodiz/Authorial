@@ -1569,6 +1569,9 @@ a img {
 .sidebar-primary .widget_search input[type=submit]:hover, .sidebar-primary .widget_search input[type=submit]:focus {
   background: var(--color-accent);
 }
+.sidebar-primary .widget_search label {
+  display: none;
+}
 
 .widget_recent_entries span {
   display: block;
