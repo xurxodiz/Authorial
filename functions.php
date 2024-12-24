@@ -327,7 +327,7 @@ if (! function_exists('ct_author_excerpt')) {
     {
         global $post;
         $show_full_post = get_theme_mod('full_post');
-        $ismore         = strpos($post->post_content, '<!--more-->');
+        $ismore         = ($post) ? strpos($post->post_content, '<!--more-->') : false;
 
         if ($show_full_post === 'yes' || $ismore) {
             the_content();
