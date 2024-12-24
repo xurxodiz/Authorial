@@ -2001,13 +2001,15 @@ dt {
   display: flex;
 }
 
-.webmention, .pingback {
+.mention, .pingback, .like, .repost {
   background-color: var(--color-soft);
   border-radius: 10px;
 }
 
-.webmention .comment-content,
-.pingback .comment-content {
+.mention .comment-content,
+.pingback .comment-content,
+.like .comment-content,
+.repost .comment-content {
   font-size: 0.7em;
   letter-spacing: 0.01em;
   font-style: normal;
