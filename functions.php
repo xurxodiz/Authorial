@@ -959,17 +959,15 @@ add_action('init', function() {
 function query_all_comments( $query ) {
     $query->query_vars[ 'type__in' ] = array(
         'pings',
+        'pingback', /* pings above should include */
+        'trackback', /* these both */
         'comment',
         'mention',
         'like',
         'repost',
-        'mention',
         'reply',
-        'comment',
         'tag',
         'bookmark',
-        'like',
-        'repost',
         'rsvp:yes',
         'rsvp:no',
         'rsvp:maybe',
@@ -978,9 +976,7 @@ function query_all_comments( $query ) {
         'listen',
         'read',
         'watch',
-        'follow',
-        'pingback', /* pings above should include */
-        'trackback' /* these both */
+        'follow'
     );
 }
 add_filter( 'pre_get_comments', 'query_all_comments' );
